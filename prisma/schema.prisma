@@ -15,6 +15,8 @@ model Curso {
   nome        String
   turno       String
   agrupamento Int
+  disciplina Disciplina[]
+  turma Turma[]
 
   @@map("curso")
 }
@@ -22,10 +24,12 @@ model Curso {
 model Disciplina {
   id        String @id @default(uuid())
   nome      String
-  curso     String
   periodo   Int
   qtaulas   Int
-  professor String
+  professor Professor @relation(fields: [professor_id], references: [id])
+  professor_id String
+  curso Curso @relation(fields: [curso_id], references: [id])
+  curso_id String
 
   @@map("disciplina")
 }
@@ -34,13 +38,16 @@ model Professor {
   id    String @id @default(uuid())
   nome  String
   email String
+  restricao Restricao[]
+  disciplina Disciplina[]
 
   @@map("professor")
 }
 
 model Restricao {
   id        String @id @default(uuid())
-  professor String
+  professor Professor @relation(fields: [professor_id], references: [id])
+  professor_id String
   dia       String
   periodo   Int
 
@@ -49,9 +56,10 @@ model Restricao {
 
 model Turma {
   id       String @id @default(uuid())
-  curso    String
   periodo  Int
   qtalunos Int
+  curso Curso @relation(fields: [curso_id], references: [id])
+  curso_id String
 
   @@map("turma")
 }
