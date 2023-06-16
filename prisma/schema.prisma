@@ -11,45 +11,45 @@ datasource db {
 }
 
 model Curso {
-  id          String @id @default(uuid())
+  id          String       @id @default(uuid())
   nome        String
   turno       String
   agrupamento Int
-  disciplina Disciplina[]
-  turma Turma[]
+  disciplina  Disciplina[]
+  turma       Turma[]
 
   @@map("curso")
 }
 
 model Disciplina {
-  id        String @id @default(uuid())
-  nome      String
-  periodo   Int
-  qtaulas   Int
-  professor Professor @relation(fields: [professor_id], references: [id])
+  id           String    @id @default(uuid())
+  nome         String
+  periodo      Int
+  qtaulas      Int
+  professor    Professor @relation(fields: [professor_id], references: [id])
   professor_id String
-  curso Curso @relation(fields: [curso_id], references: [id])
-  curso_id String
+  curso        Curso     @relation(fields: [curso_id], references: [id])
+  curso_id     String
 
   @@map("disciplina")
 }
 
 model Professor {
-  id    String @id @default(uuid())
-  nome  String
-  email String
-  restricao Restricao[]
+  id         String       @id @default(uuid())
+  nome       String
+  email      String
+  restricao  Restricao[]
   disciplina Disciplina[]
 
   @@map("professor")
 }
 
 model Restricao {
-  id        String @id @default(uuid())
-  professor Professor @relation(fields: [professor_id], references: [id])
+  id           String    @id @default(uuid())
+  professor    Professor @relation(fields: [professor_id], references: [id])
   professor_id String
-  dia       String
-  periodo   Int
+  dia          String
+  periodo      Int
 
   @@map("restricao")
 }
@@ -58,8 +58,17 @@ model Turma {
   id       String @id @default(uuid())
   periodo  Int
   qtalunos Int
-  curso Curso @relation(fields: [curso_id], references: [id])
+  curso    Curso  @relation(fields: [curso_id], references: [id])
   curso_id String
 
   @@map("turma")
+}
+
+model Sala {
+  id         String @id @default(uuid())
+  nome       String
+  capacidade Int
+  qtdpcs     Int
+
+  @@map("sala")
 }
