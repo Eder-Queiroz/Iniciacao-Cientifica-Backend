@@ -2,8 +2,8 @@ import prismaClient from "../../prisma";
 
 interface RestricaoRequest {
   professor_id: string;
-  dia: string;
-  periodo: number;
+  dia: number;
+  periodo: string;
 }
 
 export default class RestricaoService {

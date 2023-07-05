@@ -48,8 +48,8 @@ model Restricao {
   id           String    @id @default(uuid())
   professor    Professor @relation(fields: [professor_id], references: [id])
   professor_id String
-  dia          String
-  periodo      Int
+  dia          Int
+  periodo      String
 
   @@map("restricao")
 }
