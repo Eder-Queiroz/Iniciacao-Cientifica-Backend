@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
-import ProfessorService from "../../Service/ProfessorService/ProfessorService";
+import TeacherService from "../../Service/TeacherService";
 
-export default class ProfessorController {
+export default class TeacherController {
   async create(request: Request, response: Response) {
-    const { nome, email } = request.body;
+    const { name, email } = request.body;
 
-    const professorService = new ProfessorService();
+    const professorService = new TeacherService();
 
     try {
-      const professor = await professorService.create({ nome, email });
+      const professor = await professorService.create({ name, email });
 
       return response.json(professor);
     } catch (err) {
@@ -17,7 +17,7 @@ export default class ProfessorController {
   }
 
   async read(request: Request, response: Response) {
-    const professorService = new ProfessorService();
+    const professorService = new TeacherService();
 
     try {
       const professores = await professorService.read();
@@ -29,13 +29,13 @@ export default class ProfessorController {
   }
 
   async update(request: Request, response: Response) {
-    const { nome, email } = request.body;
+    const { name, email } = request.body;
     const id = request.params.id as string;
 
-    const professorService = new ProfessorService();
+    const professorService = new TeacherService();
 
     try {
-      const professor = await professorService.update({ nome, email }, id);
+      const professor = await professorService.update({ name, email }, id);
 
       return response.json(professor);
     } catch (err) {
@@ -46,7 +46,7 @@ export default class ProfessorController {
   async delete(request: Request, response: Response) {
     const id = request.params.id as string;
 
-    const professorService = new ProfessorService();
+    const professorService = new TeacherService();
 
     try {
       const professor = await professorService.delete(id);

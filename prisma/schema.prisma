@@ -10,65 +10,104 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Curso {
-  id          String       @id @default(uuid())
-  nome        String
-  turno       String
-  agrupamento Int
-  disciplina  Disciplina[]
-  turma       Turma[]
+model Teacher {
+  id    String @id @default(uuid())
+  name  String
+  email String
 
-  @@map("curso")
+  restrictions Restriction[]
+  classrooms   Classroom[]
+
+  @@map("teachers")
 }
 
-model Disciplina {
-  id           String    @id @default(uuid())
-  nome         String
-  periodo      Int
-  qtaulas      Int
-  professor    Professor @relation(fields: [professor_id], references: [id])
-  professor_id String
-  curso        Curso     @relation(fields: [curso_id], references: [id])
-  curso_id     String
+model Restriction {
+  id         String  @id @default(uuid())
+  Period     String
+  Day        Int
+  teacher    Teacher @relation(fields: [teacher_id], references: [id])
+  teacher_id String
 
-  @@map("disciplina")
+  @@map("restrictions")
 }
 
-model Professor {
-  id         String       @id @default(uuid())
-  nome       String
-  email      String
-  restricao  Restricao[]
-  disciplina Disciplina[]
+model Discipline {
+  id     String @id @default(uuid())
+  name   String
+  period Int
 
-  @@map("professor")
+  classrooms Classroom[]
+
+  @@map("disciplines")
 }
 
-model Restricao {
-  id           String    @id @default(uuid())
-  professor    Professor @relation(fields: [professor_id], references: [id])
-  professor_id String
-  dia          Int
-  periodo      String
-
-  @@map("restricao")
-}
-
-model Turma {
+model Course {
   id       String @id @default(uuid())
-  periodo  Int
-  qtalunos Int
-  curso    Curso  @relation(fields: [curso_id], references: [id])
-  curso_id String
+  name     String
+  shift    String
+  grouping Int
 
-  @@map("turma")
+  classes    Class[]
+  classrooms Classroom[]
+
+  @@map("courses")
 }
 
-model Sala {
-  id         String @id @default(uuid())
-  nome       String
-  capacidade Int
-  qtdpcs     Int
+model Class {
+  id           String @id @default(uuid())
+  name         String
+  pariod       Int
+  num_students Int
+  course       Course @relation(fields: [course_id], references: [id])
+  course_id    String
 
-  @@map("sala")
+  groups     Groups[]
+  rooms      Room[]
+  classrooms Classroom[]
+
+  @@map("classes")
+}
+
+model Groups {
+  id       String @id @default(uuid())
+  group1   String
+  group2   String
+  group3   String
+  group4   String
+  class    Class  @relation(fields: [class_id], references: [id])
+  class_id String
+
+  @@map("groups")
+}
+
+model Room {
+  id       String  @id @default(uuid())
+  name     String
+  fixed    Boolean
+  building String
+  capacity Int
+  class    Class?  @relation(fields: [class_id], references: [id])
+  class_id String?
+
+  classrooms Classroom[]
+
+  @@map("rooms")
+}
+
+model Classroom {
+  id            String     @id @default(uuid())
+  amount        Int
+  duration      Int
+  teacher       Teacher    @relation(fields: [teacher_id], references: [id])
+  teacher_id    String
+  discipline    Discipline @relation(fields: [discipline_id], references: [id])
+  discipline_id String
+  room          Room       @relation(fields: [room_id], references: [id])
+  room_id       String
+  course        Course     @relation(fields: [course_id], references: [id])
+  course_id     String
+  class         Class      @relation(fields: [class_id], references: [id])
+  class_id      String
+
+  @@map("classrooms")
 }
