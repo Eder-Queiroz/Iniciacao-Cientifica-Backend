@@ -23,8 +23,8 @@ model Teacher {
 
 model Restriction {
   id         String  @id @default(uuid())
-  Period     String
-  Day        Int
+  period     String
+  day        Int
   teacher    Teacher @relation(fields: [teacher_id], references: [id])
   teacher_id String
 
@@ -56,7 +56,7 @@ model Course {
 model Class {
   id           String @id @default(uuid())
   name         String
-  pariod       Int
+  period       Int
   num_students Int
   course       Course @relation(fields: [course_id], references: [id])
   course_id    String
@@ -69,12 +69,12 @@ model Class {
 }
 
 model Groups {
-  id       String @id @default(uuid())
+  id       String  @id @default(uuid())
   group1   String
   group2   String
-  group3   String
-  group4   String
-  class    Class  @relation(fields: [class_id], references: [id])
+  group3   String?
+  group4   String?
+  class    Class   @relation(fields: [class_id], references: [id])
   class_id String
 
   @@map("groups")

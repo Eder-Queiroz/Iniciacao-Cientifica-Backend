@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "groups" ALTER COLUMN "group3" DROP NOT NULL,
+ALTER COLUMN "group4" DROP NOT NULL;
