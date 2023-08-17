@@ -22,7 +22,11 @@ export default class ClassService {
   }
 
   async read() {
-    const classes = await prismaClient.class.findMany();
+    const classes = await prismaClient.class.findMany({
+      include: {
+        course: true,
+      },
+    });
 
     return classes;
   }

@@ -20,7 +20,11 @@ export default class RestrictionsService {
   }
 
   async read() {
-    const restrictions = await prismaClient.restriction.findMany();
+    const restrictions = await prismaClient.restriction.findMany({
+      include: {
+        teacher: true,
+      },
+    });
 
     return restrictions;
   }

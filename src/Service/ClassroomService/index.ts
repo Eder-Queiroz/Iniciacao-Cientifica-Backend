@@ -36,7 +36,15 @@ export default class classroomService {
   }
 
   async read() {
-    const classrooms = await prismaClient.classroom.findMany();
+    const classrooms = await prismaClient.classroom.findMany({
+      include: {
+        class: true,
+        course: true,
+        discipline: true,
+        room: true,
+        teacher: true,
+      },
+    });
 
     return classrooms;
   }

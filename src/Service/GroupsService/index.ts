@@ -24,7 +24,11 @@ export default class GroupService {
   }
 
   async read() {
-    const groups = await prismaClient.groups.findMany();
+    const groups = await prismaClient.groups.findMany({
+      include: {
+        class: true,
+      },
+    });
 
     return groups;
   }

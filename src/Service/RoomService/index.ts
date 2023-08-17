@@ -24,7 +24,11 @@ export default class RoomService {
   }
 
   async read() {
-    const rooms = await prismaClient.room.findMany();
+    const rooms = await prismaClient.room.findMany({
+      include: {
+        class: true,
+      },
+    });
 
     return rooms;
   }
