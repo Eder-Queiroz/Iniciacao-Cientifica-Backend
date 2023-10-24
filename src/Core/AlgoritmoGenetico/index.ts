@@ -107,7 +107,7 @@ export default class AlgoritmoGenetico {
     this.professores = await professorService.read();
     this.restricoes = await restricaoService.read();
 
-    console.log("Iniciado.");
+    console.log("\n\nIniciado.");
     const antes = Date.now();
     this.AG();
     console.log("Tempo de execução: " + (Date.now() - antes) + "ms");
@@ -470,6 +470,8 @@ export default class AlgoritmoGenetico {
                 }
               } else {
                 // erro: quantidade de aulas incorretas
+                console.log("erro: quantidade de aulas incorretas");
+                // return;
               }
             }
           }
@@ -482,14 +484,12 @@ export default class AlgoritmoGenetico {
     this.fitness = new Array();
 
     for (let i = 1; i <= this.qtd_individuos; i++) {
-      this.fitness[i] = 70000;
+      this.fitness[i] = 160000; // * valor inicial ajustado
 
       let qtdad = this.aulasDuplas(i); // ? +5 por aula duplas
       let qtdcp = this.choqueHorariosProfessores(i); //? -500 por choque ocorrido
       let qtintervalo = this.intervalo11Horas(i); //? -10 por intervalo ocorrido
       let qtar = this.analiseRestricoes(i); //? -50 por restricao encontrada
-
-      console.log(this.fitness[i]);
 
       this.resultadoFitness(i, qtdad, qtdcp, qtintervalo, qtar);
     }
@@ -505,47 +505,56 @@ export default class AlgoritmoGenetico {
     for (let x = 1; x <= this.turmas.length; x++) {
       // *descobrindo agrupamento
       let h = 1;
+      let max = 0; // *valor maximo para rodar o while para que não entre em loop infinito caso não encontre aulas
 
       while (this.populacao[individuo][x][h] == undefined) {
         h++;
+        max++;
+
+        if (max === 200) {
+          break;
+        }
       }
 
-      let agrp =
-        this.cursos[
-          this.localizarCurso(this.populacao[individuo][x][h].curso_id)
-        ].agrupamento;
+      if (max != 200) {
+        let agrp =
+          this.cursos[
+            this.localizarCurso(this.populacao[individuo][x][h].curso_id)
+          ].agrupamento;
 
-      if (agrp == 1) {
-        max = 16;
-      } else if (agrp == 2) {
-        max = 14;
-      } else if (agrp == 3) {
-        max = 12;
-      }
+        if (agrp == 1) {
+          max = 16;
+        } else if (agrp == 2) {
+          max = 14;
+        } else if (agrp == 3) {
+          max = 12;
+        }
 
-      for (let i = 0; i < 5; i++) {
-        j = 1;
+        for (let i = 0; i < 5; i++) {
+          j = 1;
 
-        while (j < max) {
-          if (
-            this.populacao[individuo][x][16 * i + j] != undefined &&
-            this.populacao[individuo][x][16 * i + (j + agrp)] != undefined
-          ) {
+          while (j < max) {
             if (
-              this.populacao[individuo][x][16 * i + j] ==
-              this.populacao[individuo][x][16 * i + (j + agrp)]
+              this.populacao[individuo][x][16 * i + j] != undefined &&
+              this.populacao[individuo][x][16 * i + (j + agrp)] != undefined
             ) {
-              this.fitness[individuo] += 5;
-              qtd++;
+              if (
+                this.populacao[individuo][x][16 * i + j] ==
+                this.populacao[individuo][x][16 * i + (j + agrp)]
+              ) {
+                this.fitness[individuo] += 5;
+                qtd++;
+                // console.log("aula dupla encontrada: " + x + " " + (16 * i + j));
+              }
             }
-          }
 
-          if (agrp == 1) {
-            j++;
-          } else if (agrp == 2) {
-            j += 2;
-          } else if (agrp == 3) {
-            j += 3;
+            if (agrp == 1) {
+              j++;
+            } else if (agrp == 2) {
+              j += 2;
+            } else if (agrp == 3) {
+              j += 3;
+            }
           }
         }
       }
@@ -693,7 +702,6 @@ export default class AlgoritmoGenetico {
         retorno = posicoes[i];
       }
     }
-
     return retorno;
   }
 
@@ -707,7 +715,7 @@ export default class AlgoritmoGenetico {
     let pos_restante: number[][] = [];
     let posicao_filho: number;
 
-    for (let i = 1; i < this.turmas.length; i++) {
+    for (let i = 1; i <= this.turmas.length; i++) {
       pos_restante[i] = [];
 
       for (let j = 1; j <= 80; j++) {
@@ -808,9 +816,10 @@ export default class AlgoritmoGenetico {
 
   public filhosParaPais() {
     for (let i = 1; i <= this.qtd_individuos; i++) {
-      this.populacao[i] = this.filhos[i];
+      if (this.filhos[i] != undefined) {
+        this.populacao[i] = this.filhos[i];
+      }
     }
-
     this.filhos = [];
   }
 

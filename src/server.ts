@@ -3,7 +3,7 @@ import "express-async-errors";
 import cors from "cors";
 import dotenv from "dotenv";
 import { router } from "./router";
-// import AlgoritmoGenetico from "./Core/AlgoritmoGenetico";
+import AlgoritmoGenetico from "./Core/AlgoritmoGenetico";
 
 dotenv.config();
 const { PORT } = process.env;
@@ -29,10 +29,15 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   });
 });
 
+app.get("/ag", (req, res) => {
+  const ag = new AlgoritmoGenetico();
+  const result = ag.ngOnInit();
+  return res.json(result);
+})
+
 app.listen(PORT, () =>
   console.log(
     `Server online!\nServidor rodando na porta ${PORT} => http://localhost:${PORT}`
   )
 );
 
-// new AlgoritmoGenetico().ngOnInit();
