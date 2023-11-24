@@ -173,6 +173,7 @@ export default class AlgoritmoGenetico {
     // this.MostraResultadoPopulacao();
     console.log("choques: ");
     console.log(this.res3);
+    this.exibirResultadoFinal();
 
     if (this.res[2] != 0) {
       console.clear();
@@ -1386,6 +1387,31 @@ export default class AlgoritmoGenetico {
         this.res[3] = intervalo;
         this.res[4] = ar;
         this.res2 = this.populacao[posicao];
+      }
+    }
+  }
+
+  public exibirResultadoFinal() {
+    console.log("Resultado Final - Melhor Solução Encontrada:");
+    console.log("Fitness: " + this.res[0]);
+    console.log("Aulas Duplas: " + this.res[1]);
+    console.log("Choque de Horários Professores: " + this.res[2]);
+    console.log("Intervalo de 11 Horas: " + this.res[3]);
+    console.log("Restrições Encontradas: " + this.res[4]);
+    console.log("Configuração de Horários:");
+    for (let i = 1; i <= this.turmas.length; i++) {
+      console.log("Turma " + i + ":");
+      for (let j = 1; j <= 80; j++) {
+        if (this.res2[i][j] !== undefined) {
+          const aulaInfo = {
+            nomeDisciplina: this.res2[i][j].nome,
+            nomeProfessor: this.res2[i][j].professor.nome,
+            qtaulas: this.res2[i][j].qtaulas,
+            periodo: this.res2[i][j].periodo,
+            horario: j,
+          };
+          console.log(JSON.stringify(aulaInfo));
+        }
       }
     }
   }
