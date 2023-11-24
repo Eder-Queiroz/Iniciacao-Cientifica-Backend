@@ -182,25 +182,22 @@ export default class AlgoritmoGenetico {
     return this.pdfResultado();
   }
 
-  public MostraResultadoPopulacao() {
-    for (let i = 1; i <= this.qtd_individuos; i++) {
-      for (let j = 1; j <= this.turmas.length; j++) {
-        console.log("Turma: " + j);
+  public MostraResultadoPopulacao(dia: number, horario: number): string {
+    let text = "";
 
-        for (let k = 0; k < this.dias.length; k++) {
-          for (let l = 1; l <= 12; l++) {
-            if (this.populacao[i][j][k * 16 + l] != undefined) {
-              console.log(this.dias[k] + ": ");
-              console.log(
-                this.horarios[l - 1] +
-                  " - " +
-                  this.populacao[i][j][k * 16 + l].nome
-              );
+    for (let i = 1; i <= this.turmas.length; i++) {
+      for (let k = 0; k < this.dias.length; k++) {
+        for (let l = 1; l <= 12; l++) {
+          if (this.res2[i][k * 16 + l] != undefined) {
+            if (k == dia && l == horario) {
+              text += this.res2[i][k * 16 + l].nome + "\n";
             }
           }
         }
       }
     }
+
+    return text;
   }
 
   public pdfResultado() {
@@ -231,143 +228,323 @@ export default class AlgoritmoGenetico {
         {
           style: "table",
           table: {
-            widths: ["16%", "16%", "16%", "16%", "16%", "16%"],
+            widths: ["20%", "80%"],
             body: [
               [
                 { text: "", style: "tableHeader" },
-                { text: "Segunda", style: "tableHeader" },
-                { text: "Terça", style: "tableHeader" },
-                { text: "Quarta", style: "tableHeader" },
-                { text: "Quinta", style: "tableHeader" },
-                { text: "Sexta", style: "tableHeader" },
+                { text: "Segunda - Feira", style: "tableHeader" },
+                // { text: "Terça", style: "tableHeader" },
+                // { text: "Quarta", style: "tableHeader" },
+                // { text: "Quinta", style: "tableHeader" },
+                // { text: "Sexta", style: "tableHeader" },
               ],
               [
                 { text: "7:10 às 8:00", style: "tableHeader" },
-                { text: "teste2" },
-                { text: "teste3" },
-                { text: "teste4" },
-                { text: "teste5" },
-                { text: "teste" },
+                { text: this.MostraResultadoPopulacao(0, 1) },
               ],
               [
                 { text: "8:00 às 8:50", style: "tableHeader" },
-                { text: "teste2" },
-                { text: "teste3" },
-                { text: "teste4" },
-                { text: "teste5" },
-                { text: "teste" },
+                { text: this.MostraResultadoPopulacao(0, 2) },
               ],
               [
                 { text: "8:50 às 9:40", style: "tableHeader" },
-                { text: "teste2" },
-                { text: "teste3" },
-                { text: "teste4" },
-                { text: "teste5" },
-                { text: "teste" },
+                { text: this.MostraResultadoPopulacao(0, 3) },
               ],
               [
                 { text: "9:50 às 10:40", style: "tableHeader" },
-                { text: "teste2" },
-                { text: "teste3" },
-                { text: "teste4" },
-                { text: "teste5" },
-                { text: "teste" },
+                { text: this.MostraResultadoPopulacao(0, 4) },
               ],
               [
                 { text: "10:40 às 11:30", style: "tableHeader" },
-                { text: "teste2" },
-                { text: "teste3" },
-                { text: "teste4" },
-                { text: "teste5" },
-                { text: "teste" },
+                { text: this.MostraResultadoPopulacao(0, 5) },
               ],
               [
                 { text: "11:30 às 12:20", style: "tableHeader" },
-                { text: "teste2" },
-                { text: "teste3" },
-                { text: "teste4" },
-                { text: "teste5" },
-                { text: "teste" },
+                { text: this.MostraResultadoPopulacao(0, 6) },
               ],
               [
                 { text: "13:00 às 13:50", style: "tableHeader" },
-                { text: "teste2" },
-                { text: "teste3" },
-                { text: "teste4" },
-                { text: "teste5" },
-                { text: "teste" },
+                { text: this.MostraResultadoPopulacao(0, 7) },
               ],
               [
                 { text: "13:50 às 14:40", style: "tableHeader" },
-                { text: "teste2" },
-                { text: "teste3" },
-                { text: "teste4" },
-                { text: "teste5" },
-                { text: "teste" },
+                { text: this.MostraResultadoPopulacao(0, 8) },
               ],
               [
                 { text: "14:40 às 15:30", style: "tableHeader" },
-                { text: "teste2" },
-                { text: "teste3" },
-                { text: "teste4" },
-                { text: "teste5" },
-                { text: "teste" },
+                { text: this.MostraResultadoPopulacao(0, 9) },
               ],
               [
                 { text: "15:40 às 16:30", style: "tableHeader" },
-                { text: "teste2" },
-                { text: "teste3" },
-                { text: "teste4" },
-                { text: "teste5" },
-                { text: "teste" },
+                { text: this.MostraResultadoPopulacao(0, 10) },
               ],
               [
                 { text: "16:30 às 17:20", style: "tableHeader" },
-                { text: "teste2" },
-                { text: "teste3" },
-                { text: "teste4" },
-                { text: "teste5" },
-                { text: "teste" },
+                { text: this.MostraResultadoPopulacao(0, 11) },
               ],
               [
                 { text: "17:20 às 18:10", style: "tableHeader" },
-                { text: "teste2" },
-                { text: "teste3" },
-                { text: "teste4" },
-                { text: "teste5" },
-                { text: "teste" },
+                { text: this.MostraResultadoPopulacao(0, 12) },
+              ],
+              // [
+              //   { text: "19:00 às 19:50", style: "tableHeader" },
+              //   { text: "teste2" },
+              // ],
+              // [
+              //   { text: "19:50 às 20:40", style: "tableHeader" },
+              //   { text: "teste2" },
+              // ],
+              // [
+              //   { text: "20:50 às 21:40", style: "tableHeader" },
+              //   { text: "teste2" },
+              // ],
+              // [
+              //   { text: "21:40 às 22:30", style: "tableHeader" },
+              //   { text: "teste2" },
+              // ],
+            ],
+          },
+        },
+        {
+          pageBreak: "before",
+          style: "table",
+          table: {
+            widths: ["20%", "80%"],
+            body: [
+              [
+                { text: "", style: "tableHeader" },
+                { text: "Terça - Feira", style: "tableHeader" },
               ],
               [
-                { text: "19:00 às 19:50", style: "tableHeader" },
-                { text: "teste2" },
-                { text: "teste3" },
-                { text: "teste4" },
-                { text: "teste5" },
-                { text: "teste" },
+                { text: "7:10 às 8:00", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(1, 1) },
               ],
               [
-                { text: "19:50 às 20:40", style: "tableHeader" },
-                { text: "teste2" },
-                { text: "teste3" },
-                { text: "teste4" },
-                { text: "teste5" },
-                { text: "teste" },
+                { text: "8:00 às 8:50", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(1, 2) },
               ],
               [
-                { text: "20:50 às 21:40", style: "tableHeader" },
-                { text: "teste2" },
-                { text: "teste3" },
-                { text: "teste4" },
-                { text: "teste5" },
-                { text: "teste" },
+                { text: "8:50 às 9:40", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(1, 3) },
               ],
               [
-                { text: "21:40 às 22:30", style: "tableHeader" },
-                { text: "teste2" },
-                { text: "teste3" },
-                { text: "teste4" },
-                { text: "teste5" },
-                { text: "teste" },
+                { text: "9:50 às 10:40", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(1, 4) },
+              ],
+              [
+                { text: "10:40 às 11:30", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(1, 5) },
+              ],
+              [
+                { text: "11:30 às 12:20", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(1, 6) },
+              ],
+              [
+                { text: "13:00 às 13:50", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(1, 7) },
+              ],
+              [
+                { text: "13:50 às 14:40", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(1, 8) },
+              ],
+              [
+                { text: "14:40 às 15:30", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(1, 9) },
+              ],
+              [
+                { text: "15:40 às 16:30", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(1, 10) },
+              ],
+              [
+                { text: "16:30 às 17:20", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(1, 11) },
+              ],
+              [
+                { text: "17:20 às 18:10", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(1, 12) },
+              ],
+            ],
+          },
+        },
+        {
+          pageBreak: "before",
+          style: "table",
+          table: {
+            widths: ["20%", "80%"],
+            body: [
+              [
+                { text: "", style: "tableHeader" },
+                { text: "Quarta - Feira", style: "tableHeader" },
+              ],
+              [
+                { text: "7:10 às 8:00", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(2, 1) },
+              ],
+              [
+                { text: "8:00 às 8:50", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(2, 2) },
+              ],
+              [
+                { text: "8:50 às 9:40", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(2, 3) },
+              ],
+              [
+                { text: "9:50 às 10:40", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(2, 4) },
+              ],
+              [
+                { text: "10:40 às 11:30", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(2, 5) },
+              ],
+              [
+                { text: "11:30 às 12:20", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(2, 6) },
+              ],
+              [
+                { text: "13:00 às 13:50", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(2, 7) },
+              ],
+              [
+                { text: "13:50 às 14:40", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(2, 8) },
+              ],
+              [
+                { text: "14:40 às 15:30", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(2, 9) },
+              ],
+              [
+                { text: "15:40 às 16:30", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(2, 10) },
+              ],
+              [
+                { text: "16:30 às 17:20", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(2, 11) },
+              ],
+              [
+                { text: "17:20 às 18:10", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(2, 12) },
+              ],
+            ],
+          },
+        },
+        {
+          pageBreak: "before",
+          style: "table",
+          table: {
+            widths: ["20%", "80%"],
+            body: [
+              [
+                { text: "", style: "tableHeader" },
+                { text: "Quinta - Feira", style: "tableHeader" },
+              ],
+              [
+                { text: "7:10 às 8:00", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(3, 1) },
+              ],
+              [
+                { text: "8:00 às 8:50", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(3, 2) },
+              ],
+              [
+                { text: "8:50 às 9:40", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(3, 3) },
+              ],
+              [
+                { text: "9:50 às 10:40", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(3, 4) },
+              ],
+              [
+                { text: "10:40 às 11:30", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(3, 5) },
+              ],
+              [
+                { text: "11:30 às 12:20", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(3, 6) },
+              ],
+              [
+                { text: "13:00 às 13:50", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(3, 7) },
+              ],
+              [
+                { text: "13:50 às 14:40", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(3, 8) },
+              ],
+              [
+                { text: "14:40 às 15:30", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(3, 9) },
+              ],
+              [
+                { text: "15:40 às 16:30", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(3, 10) },
+              ],
+              [
+                { text: "16:30 às 17:20", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(3, 11) },
+              ],
+              [
+                { text: "17:20 às 18:10", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(3, 12) },
+              ],
+            ],
+          },
+        },
+        {
+          pageBreak: "before",
+          style: "table",
+          table: {
+            widths: ["20%", "80%"],
+            body: [
+              [
+                { text: "", style: "tableHeader" },
+                { text: "Sexta - Feira", style: "tableHeader" },
+              ],
+              [
+                { text: "7:10 às 8:00", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(4, 1) },
+              ],
+              [
+                { text: "8:00 às 8:50", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(4, 2) },
+              ],
+              [
+                { text: "8:50 às 9:40", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(4, 3) },
+              ],
+              [
+                { text: "9:50 às 10:40", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(4, 4) },
+              ],
+              [
+                { text: "10:40 às 11:30", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(4, 5) },
+              ],
+              [
+                { text: "11:30 às 12:20", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(4, 6) },
+              ],
+              [
+                { text: "13:00 às 13:50", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(4, 7) },
+              ],
+              [
+                { text: "13:50 às 14:40", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(4, 8) },
+              ],
+              [
+                { text: "14:40 às 15:30", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(4, 9) },
+              ],
+              [
+                { text: "15:40 às 16:30", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(4, 10) },
+              ],
+              [
+                { text: "16:30 às 17:20", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(4, 11) },
+              ],
+              [
+                { text: "17:20 às 18:10", style: "tableHeader" },
+                { text: this.MostraResultadoPopulacao(4, 12) },
               ],
             ],
           },
