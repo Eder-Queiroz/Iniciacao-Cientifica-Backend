@@ -80,7 +80,7 @@ export default class AlgoritmoGenetico {
     this.res[0] = 0;
     this.qtd_individuos = 200;
 
-    this.recebeDados();
+    return this.recebeDados();
   }
 
   public async recebeDados() {
@@ -109,8 +109,10 @@ export default class AlgoritmoGenetico {
 
     console.log("\n\nIniciado.");
     const antes = Date.now();
-    this.AG();
+    const result = this.AG();
     console.log("Tempo de execução: " + (Date.now() - antes) + "ms");
+
+    return result;
   }
 
   public AG() {
@@ -168,7 +170,7 @@ export default class AlgoritmoGenetico {
     console.log("quantidade de aulas duplas: " + this.res[1]);
     console.log("quantidade de restrições: " + this.res[4]);
     console.log("quantidade de choque de horarios: " + this.res[2]);
-    console.log(this.res2);
+    // this.MostraResultadoPopulacao();
     console.log("choques: ");
     console.log(this.res3);
 
@@ -176,6 +178,225 @@ export default class AlgoritmoGenetico {
       console.clear();
       this.AG();
     }
+
+    return this.pdfResultado();
+  }
+
+  public MostraResultadoPopulacao() {
+    for (let i = 1; i <= this.qtd_individuos; i++) {
+      for (let j = 1; j <= this.turmas.length; j++) {
+        console.log("Turma: " + j);
+
+        for (let k = 0; k < this.dias.length; k++) {
+          for (let l = 1; l <= 12; l++) {
+            if (this.populacao[i][j][k * 16 + l] != undefined) {
+              console.log(this.dias[k] + ": ");
+              console.log(
+                this.horarios[l - 1] +
+                  " - " +
+                  this.populacao[i][j][k * 16 + l].nome
+              );
+            }
+          }
+        }
+      }
+    }
+  }
+
+  public pdfResultado() {
+    return {
+      pageMargins: [20, 60, 20, 60],
+      header: {
+        margin: 20,
+        columns: [
+          {
+            table: {
+              widths: ["*"],
+              body: [
+                [
+                  [
+                    {
+                      text: "Grade Horária",
+                      style: "header",
+                    },
+                  ],
+                ],
+              ],
+            },
+            layout: "noBorders",
+          },
+        ],
+      },
+      content: [
+        {
+          style: "table",
+          table: {
+            widths: ["16%", "16%", "16%", "16%", "16%", "16%"],
+            body: [
+              [
+                { text: "", style: "tableHeader" },
+                { text: "Segunda", style: "tableHeader" },
+                { text: "Terça", style: "tableHeader" },
+                { text: "Quarta", style: "tableHeader" },
+                { text: "Quinta", style: "tableHeader" },
+                { text: "Sexta", style: "tableHeader" },
+              ],
+              [
+                { text: "7:10 às 8:00", style: "tableHeader" },
+                { text: "teste2" },
+                { text: "teste3" },
+                { text: "teste4" },
+                { text: "teste5" },
+                { text: "teste" },
+              ],
+              [
+                { text: "8:00 às 8:50", style: "tableHeader" },
+                { text: "teste2" },
+                { text: "teste3" },
+                { text: "teste4" },
+                { text: "teste5" },
+                { text: "teste" },
+              ],
+              [
+                { text: "8:50 às 9:40", style: "tableHeader" },
+                { text: "teste2" },
+                { text: "teste3" },
+                { text: "teste4" },
+                { text: "teste5" },
+                { text: "teste" },
+              ],
+              [
+                { text: "9:50 às 10:40", style: "tableHeader" },
+                { text: "teste2" },
+                { text: "teste3" },
+                { text: "teste4" },
+                { text: "teste5" },
+                { text: "teste" },
+              ],
+              [
+                { text: "10:40 às 11:30", style: "tableHeader" },
+                { text: "teste2" },
+                { text: "teste3" },
+                { text: "teste4" },
+                { text: "teste5" },
+                { text: "teste" },
+              ],
+              [
+                { text: "11:30 às 12:20", style: "tableHeader" },
+                { text: "teste2" },
+                { text: "teste3" },
+                { text: "teste4" },
+                { text: "teste5" },
+                { text: "teste" },
+              ],
+              [
+                { text: "13:00 às 13:50", style: "tableHeader" },
+                { text: "teste2" },
+                { text: "teste3" },
+                { text: "teste4" },
+                { text: "teste5" },
+                { text: "teste" },
+              ],
+              [
+                { text: "13:50 às 14:40", style: "tableHeader" },
+                { text: "teste2" },
+                { text: "teste3" },
+                { text: "teste4" },
+                { text: "teste5" },
+                { text: "teste" },
+              ],
+              [
+                { text: "14:40 às 15:30", style: "tableHeader" },
+                { text: "teste2" },
+                { text: "teste3" },
+                { text: "teste4" },
+                { text: "teste5" },
+                { text: "teste" },
+              ],
+              [
+                { text: "15:40 às 16:30", style: "tableHeader" },
+                { text: "teste2" },
+                { text: "teste3" },
+                { text: "teste4" },
+                { text: "teste5" },
+                { text: "teste" },
+              ],
+              [
+                { text: "16:30 às 17:20", style: "tableHeader" },
+                { text: "teste2" },
+                { text: "teste3" },
+                { text: "teste4" },
+                { text: "teste5" },
+                { text: "teste" },
+              ],
+              [
+                { text: "17:20 às 18:10", style: "tableHeader" },
+                { text: "teste2" },
+                { text: "teste3" },
+                { text: "teste4" },
+                { text: "teste5" },
+                { text: "teste" },
+              ],
+              [
+                { text: "19:00 às 19:50", style: "tableHeader" },
+                { text: "teste2" },
+                { text: "teste3" },
+                { text: "teste4" },
+                { text: "teste5" },
+                { text: "teste" },
+              ],
+              [
+                { text: "19:50 às 20:40", style: "tableHeader" },
+                { text: "teste2" },
+                { text: "teste3" },
+                { text: "teste4" },
+                { text: "teste5" },
+                { text: "teste" },
+              ],
+              [
+                { text: "20:50 às 21:40", style: "tableHeader" },
+                { text: "teste2" },
+                { text: "teste3" },
+                { text: "teste4" },
+                { text: "teste5" },
+                { text: "teste" },
+              ],
+              [
+                { text: "21:40 às 22:30", style: "tableHeader" },
+                { text: "teste2" },
+                { text: "teste3" },
+                { text: "teste4" },
+                { text: "teste5" },
+                { text: "teste" },
+              ],
+            ],
+          },
+        },
+      ],
+      styles: {
+        header: {
+          fontSize: 11,
+          bold: true,
+          margin: [0, 0, 0, 4],
+        },
+        headerSubtitle: {
+          fontSize: 10,
+          bold: true,
+          italics: true,
+        },
+        table: {
+          margin: [0, 20, 0, 10],
+        },
+        tableHeader: {
+          fontSize: 10,
+          bold: true,
+        },
+      },
+      defaultStyle: {
+        alignment: "justify",
+        fontSize: 10,
+      },
+    };
   }
 
   public iniciaPopulacao() {
